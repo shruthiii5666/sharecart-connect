@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart, Package, Truck, CreditCard, FileText, BarChart3 } from "lucide-react";
 
 const Navbar = () => {
+  const location = useLocation();
+  
   const navItems = [
-    { name: "Dashboard", icon: BarChart3, active: true },
-    { name: "Marketplace", icon: ShoppingCart, active: false },
-    { name: "My Surplus", icon: Package, active: false },
-    { name: "Logistics", icon: Truck, active: false },
-    { name: "Transactions", icon: FileText, active: false },
-    { name: "Payments", icon: CreditCard, active: false },
+    { name: "Dashboard", icon: BarChart3, path: "/" },
+    { name: "Marketplace", icon: ShoppingCart, path: "/marketplace" },
+    { name: "My Surplus", icon: Package, path: "/my-surplus" },
+    { name: "Logistics", icon: Truck, path: "/logistics" },
+    { name: "Transactions", icon: FileText, path: "/transactions" },
+    { name: "Payments", icon: CreditCard, path: "/payments" },
   ];
 
   return (
@@ -27,12 +30,15 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <Button
                   key={item.name}
-                  variant={item.active ? "default" : "ghost"}
+                  variant={location.pathname === item.path ? "default" : "ghost"}
                   size="sm"
                   className="flex items-center gap-2"
+                  asChild
                 >
-                  <item.icon className="w-4 h-4" />
-                  {item.name}
+                  <Link to={item.path}>
+                    <item.icon className="w-4 h-4" />
+                    {item.name}
+                  </Link>
                 </Button>
               ))}
             </div>
